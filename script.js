@@ -11,7 +11,6 @@ startBtn.addEventListener("click", () => {
   name = nameInput.value;
   email = emailInput.value;
   startTime = new Date();
-  generateQRCode();
   alert("Job started!");
 });
 
