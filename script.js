@@ -38,7 +38,7 @@ function generateQRCode() {
   qrCodeDiv.innerHTML = "";
 
   // Create a new QRCode instance
-  const qr = new QRCode(qrCodeDiv, {
+  const qrcode = new QRCode(qrCodeDiv, {
     text: qrCodeData,
     width: 128,
     height: 128,
