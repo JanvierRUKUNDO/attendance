@@ -38,3 +38,23 @@ endBtn.addEventListener("click", () => {
 
   alert("Job ended!");
 });
+// Add these lines at the beginning of your script.js to import the qrcode.js library
+import QrCode from "qrcode";
+
+// ...
+
+startBtn.addEventListener("click", () => {
+  name = nameInput.value;
+  email = emailInput.value;
+  startTime = new Date();
+  alert("Job started!");
+
+  // Generate QR code
+  const qrCodeData = `${name} | ${email}`;
+  const qrCodeDiv = document.getElementById("qrcode");
+  QrCode.toCanvas(qrCodeDiv, qrCodeData, function (error) {
+    if (error) {
+      console.error("QR code generation error:", error);
+    }
+  });
+});
