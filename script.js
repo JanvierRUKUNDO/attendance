@@ -11,7 +11,7 @@ startBtn.addEventListener("click", () => {
   name = nameInput.value;
   email = emailInput.value;
   startTime = new Date();
-  generateQRCode(name, email);
+  generateQRCode();
   alert("Job started!");
 });
 
@@ -22,7 +22,7 @@ endBtn.addEventListener("click", () => {
   }
 
   endTime = new Date();
-  generateQRCode(name, email);
+  generateQRCode();
   alert("Job ended!");
 
   startTime = null;
@@ -31,10 +31,14 @@ endBtn.addEventListener("click", () => {
   email = null;
 });
 
-function generateQRCode(name, email) {
+function generateQRCode() {
   const qrCodeData = `Name: ${name}\nEmail: ${email}\nStart Time: ${startTime}\nEnd Time: ${endTime || "Not ended"}`;
-  qrCodeDiv.innerHTML = ""; // Clear previous QR code
-  const qrcode = new QRCode(qrCodeDiv, {
+
+  // Clear previous QR code if exists
+  qrCodeDiv.innerHTML = "";
+
+  // Create a new QRCode instance
+  const qr = new QRCode(qrCodeDiv, {
     text: qrCodeData,
     width: 128,
     height: 128,
