@@ -3,6 +3,7 @@ const nameInput = document.getElementById("name");
 const emailInput = document.getElementById("email");
 const startBtn = document.getElementById("startBtn");
 const endBtn = document.getElementById("endBtn");
+const qrCodeDiv = document.getElementById("qrcode");
 
 let startTime, endTime, name, email;
 
@@ -10,6 +11,7 @@ startBtn.addEventListener("click", () => {
   name = nameInput.value;
   email = emailInput.value;
   startTime = new Date();
+  generateQRCode(name, email);
   alert("Job started!");
 });
 
@@ -20,41 +22,21 @@ endBtn.addEventListener("click", () => {
   }
 
   endTime = new Date();
-  const duration = endTime - startTime;
-
-  // Create and download an Excel file (simplified)
-  const excelData = `Name,Email,Start Time,End Time,Duration\n${name},${email},${startTime},${endTime},${duration}`;
-  const blob = new Blob([excelData], { type: "text/csv" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = "attendance.csv";
-  link.click();
+  generateQRCode(name, email);
+  alert("Job ended!");
 
   startTime = null;
   endTime = null;
   name = null;
   email = null;
-
-  alert("Job ended!");
 });
-// Add these lines at the beginning of your script.js to import the qrcode.js library
-import QrCode from "qrcode";
 
-// ...
-
-startBtn.addEventListener("click", () => {
-  name = nameInput.value;
-  email = emailInput.value;
-  startTime = new Date();
-  alert("Job started!");
-
-  // Generate QR code
-  const qrCodeData = `${name} | ${email}`;
-  const qrCodeDiv = document.getElementById("qrcode");
-  QrCode.toCanvas(qrCodeDiv, qrCodeData, function (error) {
-    if (error) {
-      console.error("QR code generation error:", error);
-    }
+function generateQRCode(name, email) {
+  const qrCodeData = `Name: ${name}\nEmail: ${email}\nStart Time: ${startTime}\nEnd Time: ${endTime || "Not ended"}`;
+  qrCodeDiv.innerHTML = ""; // Clear previous QR code
+  const qrcode = new QRCode(qrCodeDiv, {
+    text: qrCodeData,
+    width: 128,
+    height: 128,
   });
-});
+}
